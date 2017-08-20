@@ -61,7 +61,7 @@ if sendType == 0:
     msg="Liste d'achat copiée dans clipboard !"
 elif sendType == 2:
     listC=replEol(listC,MAIL_EOL_REPLACEMENT)
-    sm.sendMailWithBodyTo(listC, EMAIL_ADDRESS, EMAIL_BCC, EMAIL_TITLE,'JP Schnyder')
+    sm.sendMailWithTextBodyTo(listC, EMAIL_ADDRESS, EMAIL_BCC, EMAIL_TITLE, 'JP Schnyder')
     msg="Liste d'achat envoyée à {0}".format(EMAIL_ADDRESS)
 else: #send per sms
     listC=replEol(listC,EOL_REPLACEMENT)

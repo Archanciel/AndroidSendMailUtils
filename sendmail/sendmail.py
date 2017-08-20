@@ -128,10 +128,7 @@ def sendemailHtml(email_name, email_user, email_pswd, mailto, mailbcc, subject, 
 
 
 import sys
-import android
 import pickle
-
-droid = android.Android()
 
 mailto = 'jp.schnyder@gmail.com'
 mailbcc = 'jp.schnyder@gmail.com'
@@ -156,7 +153,7 @@ def sendMailWithBodyTo(bodyText, targetEmail, mailbcc, mailSubject, mailName):
         pass
     else:
         # Exit with error if email is not sent successfully
-        droid.makeToast('email failed')
+        print('email failed')
         sys.exit(1)
 
 
@@ -165,7 +162,7 @@ def sendMailWithTxtAndHtmlBodyTo(bodyText, bodyHtml, targetEmail, mailbcc, mailS
         pass
     else:
         # Exit with error if email is not sent successfully
-        droid.makeToast('email failed')
+        print('email failed')
         sys.exit(1)
 
 
@@ -174,7 +171,7 @@ def sendMailWithHtmlBodyTo(bodyHtml, targetEmail, mailbcc, mailSubject, mailName
         pass
     else:
         # Exit with error if email is not sent successfully
-        droid.makeToast('email failed')
+        print('email failed')
         sys.exit(1)
 
 
@@ -185,5 +182,5 @@ if __name__ == "__main__":
         sys.exit(0)
     else:
         # Exit with error if email is not sent successfully
-        droid.makeToast('email failed')
+        print('email failed')
         sys.exit(1)

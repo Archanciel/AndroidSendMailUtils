@@ -10,7 +10,7 @@ EMAIL_TITLE="Commande de médicaments pour Jean-Pierre Schnyder"
 EMAIL_BCC='jp.schnyder@gmail.com'
 
 def toHtmlTable(buf, lol):
-  buf.write('<table border="0">\n')
+  buf.write('<table border="0" align="center" style="font-weight: bold">\n')
   for sublist in lol:
     buf.write('  <tr>\n')
     buf.write('  <td>' + '</td><td>'.join(sublist) + '<td>\n')
@@ -18,11 +18,20 @@ def toHtmlTable(buf, lol):
   buf.write('</table>')
   
 droid=android.Android()
-commandeTxt="""
-Bonjour,
+bodyHtml="""
+<html>
+ <head></head> 
+ <body> 
+  <p>
+Bonjour,<br><br>
 
-Je souhaite vous commander les médicaments suivants. Avec mes remerciwnment et mes salutations. JP Schnyder.
-
+Je souhaite vous commander les m&eacute;dicaments suivants. Avec mes remerciements et mes cordiales salutations. JP Schnyder.
+  </p>
+  <center>
+  {0}
+  </center>
+ </body>
+</html>
 """
 
 pattern = r"(\d?)\W*(\d)\W*(\d)\W*(\d)\W*(\d)"
@@ -51,7 +60,7 @@ if int(valvQt) > 0:
     commande.append(['Valverde Forte', str(valvQt), 'bo&icirc;te(s)'])
 
 if int(zincQt) > 0:
-    commande.append(['Zinc Glukonat 30mg', str(zincQt), 'bo&icirc;te(s)'])
+    commande.append(['Zinc Glukonat 30 mg', str(zincQt), 'bo&icirc;te(s)'])
 
 if int(magnQt) > 0:
     commande.append(['Magnesium Compl 100 caps', str(magnQt), 'bo&icirc;te(s)'])
@@ -60,8 +69,9 @@ buf = StringIO()
 
 toHtmlTable(buf, commande)
 commandeHTML = buf.getvalue()
-
-sm.sendMailWithTxtAndHtmlBodyTo(commandeTxt, commandeHTML, EMAIL_ADDRESS, EMAIL_BCC, EMAIL_TITLE,'JP Schnyder')
+bodyHtml = bodyHtml.format(commandeHTML)
+#print(bodyHtml)
+sm.sendMailWithHtmlBodyTo(bodyHtml, EMAIL_ADDRESS, EMAIL_BCC, EMAIL_TITLE,'JP Schnyder')
 msg="Commande de médicaments ({0} Lio, {1} Sirda, {2} Valv, {3} Zinc, {4} Magn) envoyée à {5}".format(lioQt,sirdaQt,valvQt,zincQt,magnQt,EMAIL_ADDRESS)
     
 droid.dialogCreateAlert('',msg)

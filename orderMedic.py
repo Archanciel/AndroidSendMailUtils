@@ -18,17 +18,21 @@ Bonjour,
 
 Je souhaite vous commander les médicaments  suivants:
 
-Betaferon                     1 boîte
-Sirdalud Retard 6 mg {0} boîte(s)
-Lioresal 25 mg            {1} boîte(s)
-{2}
+
+Betaferon                                     1 boîte
+Sirdalud Retard 6 mg                 {0} boîte(s)
+Lioresal 25 mg                            {1} boîte(s)
+{2}{3}{4}
+
 Avec mes remerciements et mes cordiales salutations,
 Jean-Pierre Schnyder\n"""
-valverdeLine="Valverde Forte             {0} boîte(s)\n"
+valverdeLine ="Valverde Forte                             {0} boîte(s)\n"
+zincGlukoLine="Zinc Glukonat 30mg                   {0} boîte(s)\n"
+magnesiumLine="Magnesium Compl 100 caps    {0} boîte(s)\n"
 
-pattern = r"(\d?)\W*(\d)\W*(\d)"
+pattern = r"(\d?)\W*(\d)\W*(\d)\W*(\d)\W*(\d)"
 
-droid.dialogCreateInput(TITLE,"Nombre de boîtes (Lioresal, Sirdalud, Valverde F)","1, 2, 0")
+droid.dialogCreateInput(TITLE,"Nombre de boîtes (Lioresal, Sirdalud, Valverde F, Zinc G, Magnesium)","1, 2, 0, 0, 0")
 droid.dialogSetPositiveButtonText('OK')
 droid.dialogSetNegativeButtonText('Cancel') 
 droid.dialogShow() 
@@ -41,15 +45,28 @@ parms=re.search(pattern,answer['value']).groups()
 lioQt=parms[0]
 sirdaQt=parms[1]
 valvQt=parms[2]
+zincQt=parms[3]
+magnQt=parms[4]
 
 if int(valvQt) > 0:
     valverdeLine = valverdeLine.format(valvQt)
-    commande=commande.format(sirdaQt,lioQt,valverdeLine)
 else:
-    commande=commande.format(sirdaQt,lioQt,"")
+    valverdeLine = ""
+    
+if int(zincQt) > 0:
+    zincGlukoLine = zincGlukoLine.format(zincQt)
+else:
+    zincGlukoLine = ""
 
+if int(magnQt) > 0:
+    magnesiumLine = magnesiumLine.format(magnQt)
+else:
+    magnesiumLine = ""
+
+commande=commande.format(sirdaQt,lioQt,valverdeLine,zincGlukoLine,magnesiumLine)
+    	
 sm.sendMailWithBodyTo(commande, EMAIL_ADDRESS, EMAIL_BCC, EMAIL_TITLE,'JP Schnyder')
-msg="Commande de médicaments ({0} Lio, {1} Sirda, {2} Valv) envoyée à {3}".format(lioQt,sirdaQt,valvQt,EMAIL_ADDRESS)
+msg="Commande de médicaments ({0} Lio, {1} Sirda, {2} Valv, {3} Zinc, {4} Magn) envoyée à {5}".format(lioQt,sirdaQt,valvQt,zincQt,magnQt,EMAIL_ADDRESS)
     
 droid.dialogCreateAlert('',msg)
 droid.dialogSetPositiveButtonText('OK') 

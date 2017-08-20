@@ -17,6 +17,12 @@ def toHtmlTable(buf, lol):
     buf.write('  </tr>\n')
   buf.write('</table>')
   
+def plural(qtyStr):
+    if int(qtyStr) > 1:
+        return 's'
+    else:
+        return ''
+  
 droid=android.Android()
 bodyHtml="""
 <html>
@@ -53,17 +59,17 @@ zincQt=parms[3]
 magnQt=parms[4]
 
 commande = [['Betaferon', '1', 'bo&icirc;te'],
-            ['Sirdalud Retard 6 mg', str(sirdaQt), 'bo&icirc;te(s)'],
-            ['Lioresal 25 mg', str(lioQt), 'bo&icirc;te(s)']]
+            ['Sirdalud Retard 6 mg', str(sirdaQt), 'bo&icirc;te' + plural(sirdaQt)],
+            ['Lioresal 25 mg', str(lioQt), 'bo&icirc;te' + plural(lioQt)]]
 
 if int(valvQt) > 0:
-    commande.append(['Valverde Forte', str(valvQt), 'bo&icirc;te(s)'])
+    commande.append(['Valverde Forte', str(valvQt), 'bo&icirc;te' + plural(valvQt)])
 
 if int(zincQt) > 0:
-    commande.append(['Zinc Glukonat 30 mg', str(zincQt), 'bo&icirc;te(s)'])
+    commande.append(['Zinc Glukonat 30 mg', str(zincQt), 'bo&icirc;te' + plural(zincQt)])
 
 if int(magnQt) > 0:
-    commande.append(['Magnesium Compl 100 caps', str(magnQt), 'bo&icirc;te(s)'])
+    commande.append(['Magnesium Compl 100 caps', str(magnQt), 'bo&icirc;te' + plural(magnQt)])
 
 buf = StringIO()
 
